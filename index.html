@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>シフト管理システム</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState } = React;
+        
+        function ShiftManagementApp() {
+            const [viewMode, setViewMode] = useState('month');
+            const [shifts, setShifts] = useState([
+                { id: 1, date: '2025-06-24', name: '佐藤', time: '09:00-18:00', color: 'bg-blue-100' },
+                { id: 2, date: '2025-06-25', name: '鈴木', time: '10:00-19:00', color: 'bg-green-100' },
+                { id: 3, date: '2025-06-26', name: '田中', time: '08:00-17:00', color: 'bg-yellow-100' },
+            ]);
+            
+            return (
+                <div className="p-8 max-w-7xl mx-auto">
+                    <div className="mb-8">
+                        <h1 className="text-3xl font-bold mb-4">シフト管理システム</h1>
+                        
+                        <div className="flex gap-2 mb-6">
+                            <button 
+                                onClick={() => setViewMode('month')}
+                                className={`flex items-center gap-2 px-4 py-2 rounded ${viewMode === 'month' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                            >
+                                📅 月間
+                            </button>
+                            <button 
+                                onClick={() => setViewMode('week')}
+                                className={`flex items-center gap-2 px-4 py-2 rounded ${viewMode === 'week' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                            >
+                                📊 週間
+                            </button>
+                            <button 
+                                onClick={() => setViewMode('employees')}
+                                className={`flex items-center gap-2 px-4 py-2 rounded ${viewMode === 'employees' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                            >
+                                👥 従業員
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="bg-white rounded-lg shadow-lg p-6">
+                        <h2 className="text-xl font-semibold mb-4">
+                            {viewMode === 'month' && '月間シフト表'}
+                            {viewMode === 'week' && '週間シフト表'}
+                            {viewMode === 'employees' && '従業員一覧'}
+                        </h2>
+                        
+                        <div className="overflow-x-auto">
+                            <table className="w-full border-collapse border border-gray-300">
+                                <thead>
+                                    <tr className="bg-gray-50">
+                                        <th className="border border-gray-300 p-3 text-left">日付</th>
+                                        <th className="border border-gray-300 p-3 text-left">名前</th>
+                                        <th className="border border-gray-300 p-3 text-left">時間</th>
+                                        <th className="border border-gray-300 p-3 text-left">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {shifts.map((shift) => (
+                                        <tr key={shift.id} className={`hover:bg-gray-50 ${shift.color}`}>
+                                            <td className="border border-gray-300 p-3">{shift.date}</td>
+                                            <td className="border border-gray-300 p-3 font-medium">{shift.name}</td>
+                                            <td className="border border-gray-300 p-3">{shift.time}</td>
+                                            <td className="border border-gray-300 p-3">
+                                                <button className="bg-blue-500 text-white px-3 py-1 rounded text-sm mr-2 hover:bg-blue-600">
+                                                    編集
+                                                </button>
+                                                <button className="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600">
+                                                    削除
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div className="mt-6">
+                            <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                                ➕ 新しいシフトを追加
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        
+        ReactDOM.render(<ShiftManagementApp />, document.getElementById('root'));
+    </script>
+</body>
+</html> 
