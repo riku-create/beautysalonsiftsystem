@@ -1,12 +1,34 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useAuth } from '@/lib/auth'
 import { resetAllData } from '@/lib/data'
 
-export default function LoginPage() {
+// ローディングコンポーネント
+function LoginPageLoading() {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <Link href="/" className="flex justify-center items-center space-x-3">
+          <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
+            <span className="text-white font-bold text-xl">✂</span>
+          </div>
+          <h1 className="text-2xl font-bold text-gray-800">美容室シフト管理システム</h1>
+        </Link>
+        
+        <div className="mt-8 text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">ログインページを読み込み中...</p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// メインのログインコンポーネント
+function LoginPageContent() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -210,77 +232,70 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? 'ログイン中...' : 'ログイン'}
               </button>
             </div>
           </form>
 
+          {/* デバッグ用テストアカウント */}
           {!isDemoMode && (
-            <div className="mt-6">
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-300" />
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">デモ用アカウント</span>
-                </div>
-              </div>
-
-              <div className="mt-4 text-sm text-gray-600 bg-gray-50 p-3 rounded-md">
-                <p className="font-medium">デフォルトアカウント:</p>
-                <div className="space-y-2 mt-2">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p><strong>管理者:</strong> admin@salon.com / admin123</p>
-                    </div>
-                    <button
-                      onClick={() => handleTestLogin('admin@salon.com', 'admin123')}
-                      className="text-xs bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded"
-                    >
-                      入力
-                    </button>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p><strong>従業員:</strong> employee@salon.com / employee123</p>
-                    </div>
-                    <button
-                      onClick={() => handleTestLogin('employee@salon.com', 'employee123')}
-                      className="text-xs bg-purple-500 hover:bg-purple-600 text-white px-2 py-1 rounded"
-                    >
-                      入力
-                    </button>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p><strong>予約者:</strong> customer@example.com / customer123</p>
-                    </div>
-                    <button
-                      onClick={() => handleTestLogin('customer@example.com', 'customer123')}
-                      className="text-xs bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded"
-                    >
-                      入力
-                    </button>
-                  </div>
-                </div>
-                <p className="text-xs mt-2 text-gray-500">
-                  ※ 新規従業員は<Link href="/signup/employee" className="text-purple-600 hover:text-purple-500">こちら</Link>からアカウント作成、予約者は<Link href="/signup" className="text-green-600 hover:text-green-500">こちら</Link>からアカウント作成できます
-                </p>
+            <div className="mt-6 p-4 bg-gray-50 border border-gray-200 rounded-md">
+              <h3 className="text-sm font-medium text-gray-800 mb-3">🧪 テストアカウント</h3>
+              <div className="grid grid-cols-1 gap-2">
+                <button
+                  onClick={() => handleTestLogin('admin@salon.com', 'admin123')}
+                  className="text-xs bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded"
+                >
+                  管理者 (admin@salon.com)
+                </button>
+                <button
+                  onClick={() => handleTestLogin('employee@salon.com', 'employee123')}
+                  className="text-xs bg-blue-500 hover:bg-blue-600 text-white px-3 py-1.5 rounded"
+                >
+                  従業員 (employee@salon.com)
+                </button>
+                <button
+                  onClick={() => handleTestLogin('customer@example.com', 'customer123')}
+                  className="text-xs bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 rounded"
+                >
+                  予約者 (customer@example.com)
+                </button>
               </div>
             </div>
           )}
 
-          {isDemoMode && (
-            <div className="mt-6 text-center">
-              <Link href="/login" className="text-sm text-gray-600 hover:text-gray-800">
-                ← 通常のログインに戻る
+          <div className="mt-6">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300" />
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-gray-500">またはこちらから</span>
+              </div>
+            </div>
+
+            <div className="mt-6 grid grid-cols-1 gap-3">
+              <Link
+                href="/"
+                className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+              >
+                トップページに戻る
               </Link>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>
+  )
+}
+
+// エクスポートするメインコンポーネント
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<LoginPageLoading />}>
+      <LoginPageContent />
+    </Suspense>
   )
 } 
