@@ -2,95 +2,153 @@
 import Link from 'next/link'
 
 export default function Home() {
-  const shifts = [
-    { date: '2025-01-20', name: '田中さん', position: 'スタイリスト', time: '09:00-18:00' },
-    { date: '2025-01-20', name: '山田さん', position: 'アシスタント', time: '10:00-19:00' },
-    { date: '2025-01-20', name: '佐藤さん', position: '受付', time: '09:30-18:30' },
-    { date: '2025-01-21', name: '鈴木さん', position: 'スタイリスト', time: '10:00-19:00' },
-    { date: '2025-01-21', name: '田中さん', position: 'スタイリスト', time: '09:00-17:00' },
-  ]
-
   return (
-    <main className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">美容室シフト管理システムへようこそ</h1>
-            <p className="text-gray-600">
-              美容室・サロン向けに特化したシフト管理システムです。スタイリスト、アシスタント、受付スタッフのシフト申請・承認・管理が簡単に行えます。
-            </p>
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
+      {/* ヘッダー */}
+      <header className="px-6 py-4 flex justify-between items-center">
+        <div className="flex items-center space-x-3">
+          <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
+            <span className="text-white font-bold text-xl">✂</span>
           </div>
-          <nav className="space-x-4">
-            <Link href="/faq" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition duration-200 font-semibold">
-              よくある質問
-            </Link>
-          </nav>
+          <h1 className="text-xl font-bold text-gray-800">美容室シフト管理システム</h1>
         </div>
-        
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">今週のシフト表</h2>
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse border border-gray-300">
-              <thead>
-                <tr className="bg-blue-50">
-                  <th className="border border-gray-300 px-4 py-3 text-left font-semibold text-gray-700">日付</th>
-                  <th className="border border-gray-300 px-4 py-3 text-left font-semibold text-gray-700">スタッフ名</th>
-                  <th className="border border-gray-300 px-4 py-3 text-left font-semibold text-gray-700">ポジション</th>
-                  <th className="border border-gray-300 px-4 py-3 text-left font-semibold text-gray-700">勤務時間</th>
-                </tr>
-              </thead>
-              <tbody>
-                {shifts.map((shift, i) => (
-                  <tr key={i} className="hover:bg-gray-50">
-                    <td className="border border-gray-300 px-4 py-3">{shift.date}</td>
-                    <td className="border border-gray-300 px-4 py-3 font-medium">{shift.name}</td>
-                    <td className="border border-gray-300 px-4 py-3">
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        shift.position === 'スタイリスト' ? 'bg-purple-100 text-purple-800' :
-                        shift.position === 'アシスタント' ? 'bg-green-100 text-green-800' :
-                        'bg-blue-100 text-blue-800'
-                      }`}>
-                        {shift.position}
-                      </span>
-                    </td>
-                    <td className="border border-gray-300 px-4 py-3">{shift.time}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <div className="flex space-x-4">
+          <Link href="/login" className="text-gray-700 hover:text-purple-600 font-medium">
+            ログイン
+          </Link>
+          <Link href="/signup" className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-medium transition duration-200">
+            予約者登録
+          </Link>
+        </div>
+      </header>
+
+      {/* ヒーローセクション */}
+      <main className="max-w-6xl mx-auto px-6 py-20">
+        <div className="text-center mb-16">
+          <h2 className="text-5xl font-bold text-gray-800 mb-6 leading-tight">
+            美容室の<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">
+              シフト・予約管理を
+            </span><br />
+            スマートに
+          </h2>
+          
+          <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+            従業員のシフト申請から管理者の承認、お客様の予約申請まで、<br />
+            美容室の運営を効率化する統合管理システムです。
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Link 
+              href="/login" 
+              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition duration-200 shadow-lg hover:shadow-xl flex items-center"
+            >
+              ログインして開始 →
+            </Link>
+            <Link 
+              href="/signup" 
+              className="bg-white hover:bg-gray-50 text-gray-800 px-8 py-4 rounded-xl font-semibold text-lg transition duration-200 shadow-lg hover:shadow-xl border border-gray-200"
+            >
+              予約者として登録
+            </Link>
           </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-3">シンプルな料金体系</h3>
-            <p className="text-gray-600 mb-4">買い切り版49,800円または月額4,980円で全機能が利用可能です。</p>
-            <Link href="/faq" className="text-blue-600 hover:text-blue-800 font-medium">詳細を見る →</Link>
-          </div>
+        {/* 主要機能セクション */}
+        <section className="text-center">
+          <h3 className="text-3xl font-bold text-gray-800 mb-4">主要機能</h3>
+          <p className="text-lg text-gray-600 mb-12">3つの権限で美容室運営を完全サポート</p>
           
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-3">美容室特化機能</h3>
-            <p className="text-gray-600 mb-4">指名予約対応、技術レベル管理、売上連動機能を搭載しています。</p>
-            <Link href="/faq" className="text-blue-600 hover:text-blue-800 font-medium">機能一覧 →</Link>
-          </div>
-          
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-3">無料試用期間</h3>
-            <p className="text-gray-600 mb-4">2週間の無料試用で全機能をお試しいただけます。</p>
-            <div className="space-y-2">
-              <Link href="/signup" className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition duration-200 inline-block text-center w-full">
-                管理者向け無料トライアル
-              </Link>
-              <Link href="/signup/employee" className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200 inline-block text-center w-full">
-                従業員アカウント作成
-              </Link>
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* 管理者機能 */}
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition duration-200">
+              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-6">
+                <span className="text-white text-2xl">👨‍💼</span>
+              </div>
+              <h4 className="text-xl font-bold text-gray-800 mb-4">管理者</h4>
+              <ul className="text-gray-600 space-y-2 text-left">
+                <li>• スタッフシフト管理・承認</li>
+                <li>• 予約管理・顧客対応</li>
+                <li>• 売上分析・レポート</li>
+                <li>• シフトテンプレート作成</li>
+                <li>• AI自動シフト作成</li>
+              </ul>
             </div>
-            <p className="text-xs text-gray-500 mt-2">
-              従業員の方は「従業員アカウント作成」からアカウントを作成してシフト申請が可能です
-            </p>
+
+            {/* スタッフ機能 */}
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition duration-200">
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-6">
+                <span className="text-white text-2xl">✂️</span>
+              </div>
+              <h4 className="text-xl font-bold text-gray-800 mb-4">スタッフ</h4>
+              <ul className="text-gray-600 space-y-2 text-left">
+                <li>• シフト希望申請</li>
+                <li>• 有給休暇申請</li>
+                <li>• シフト確認・変更</li>
+                <li>• 売上実績確認</li>
+                <li>• 通知・メッセージ</li>
+              </ul>
+            </div>
+
+            {/* 顧客機能 */}
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition duration-200">
+              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mx-auto mb-6">
+                <span className="text-white text-2xl">🎯</span>
+              </div>
+              <h4 className="text-xl font-bold text-gray-800 mb-4">顧客</h4>
+              <ul className="text-gray-600 space-y-2 text-left">
+                <li>• オンライン予約</li>
+                <li>• スタイリスト指名</li>
+                <li>• 予約履歴確認</li>
+                <li>• メニュー・料金確認</li>
+                <li>• キャンセル・変更</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* 特徴セクション */}
+        <section className="mt-20 text-center">
+          <div className="bg-white rounded-2xl p-12 shadow-lg">
+            <h3 className="text-2xl font-bold text-gray-800 mb-8">なぜ選ばれるのか</h3>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div>
+                <div className="text-4xl mb-4">⚡</div>
+                <h4 className="font-bold text-gray-800 mb-2">効率化</h4>
+                <p className="text-gray-600">AIによる自動シフト作成で管理時間を90%削減</p>
+              </div>
+              <div>
+                <div className="text-4xl mb-4">📱</div>
+                <h4 className="font-bold text-gray-800 mb-2">使いやすさ</h4>
+                <p className="text-gray-600">直感的なUIでPC初心者でも簡単操作</p>
+              </div>
+              <div>
+                <div className="text-4xl mb-4">💰</div>
+                <h4 className="font-bold text-gray-800 mb-2">コスト削減</h4>
+                <p className="text-gray-600">月額4,980円で全機能利用可能</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* フッター */}
+      <footer className="bg-gray-800 text-white py-12 mt-20">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <div className="flex items-center justify-center space-x-3 mb-6">
+            <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold">✂</span>
+            </div>
+            <span className="text-xl font-bold">美容室シフト管理システム</span>
+          </div>
+          <p className="text-gray-400 mb-6">美容室の運営を効率化する統合管理システム</p>
+          <div className="flex justify-center space-x-8">
+            <Link href="/faq" className="text-gray-400 hover:text-white">よくある質問</Link>
+            <Link href="/login" className="text-gray-400 hover:text-white">ログイン</Link>
+            <Link href="/signup" className="text-gray-400 hover:text-white">新規登録</Link>
           </div>
         </div>
-      </div>
-    </main>
+      </footer>
+    </div>
   )
 }
