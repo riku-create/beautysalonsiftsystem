@@ -1841,14 +1841,7 @@ export function resetAllData(): void {
 
 
 // ================================================
-// ダッシュボード統計機能（必須関数群）
-// ================================================
-
-export function getShiftStats() {
-  const shifts = getShifts()
-  const today = new Date().toISOString().split('T')[0]
-// ================================================
-// ダッシュボード統計機能（重複修正版）
+// ダッシュボード統計機能
 // ================================================
 
 export function getShiftStats() {
