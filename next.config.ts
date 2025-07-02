@@ -26,9 +26,6 @@ const nextConfig = {
   // React設定
   reactStrictMode: true,
   
-  // 開発時の高速リフレッシュ
-  swcMinify: true,
-  
   // ビルド時の最適化
   compress: true,
   
